@@ -1,7 +1,3 @@
-Got it — here is the **correct, clean README with proper hashtag headers (#, ##, ###)** exactly like GitHub expects. This is **100% ready to paste**:
-
----
-
 # GigShield AI – Parametric Insurance for Gig Workers
 
 AI-powered parametric insurance platform for protecting delivery workers against income loss due to external disruptions.
