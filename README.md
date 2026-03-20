@@ -1,116 +1,142 @@
-GigShield AI – Parametric Insurance for Delivery Workers
-Problem Statement
+GigShield AI
+AI-Powered Parametric Insurance for Delivery Workers
+## Problem Statement
 
-Delivery partners working with platforms like Swiggy and Zomato face income loss due to external disruptions such as extreme weather, pollution, and traffic conditions. These disruptions can reduce their working hours and lead to a 20–30% loss in earnings. Currently, there is no financial protection mechanism for such uncontrollable events.
+Delivery partners working with platforms such as Swiggy and Zomato are highly dependent on external conditions for their daily income. Factors like heavy rainfall, extreme heat, pollution, and traffic disruptions significantly reduce their working hours, leading to a 20–30% loss in earnings.
 
-Objective
+Currently, there is no insurance solution that protects gig workers against income loss caused by such uncontrollable external disruptions.
 
-To build an AI-powered parametric insurance platform that:
+## Objective
 
-Provides weekly insurance coverage
+The objective of this project is to design and develop an AI-powered parametric insurance platform that:
 
-Automatically detects disruptions
+Provides weekly insurance coverage aligned with gig worker earnings cycles
 
-Triggers instant payouts without manual claims
+Detects external disruptions using real-time data
 
-Uses AI for risk prediction and fraud detection
+Automatically triggers payouts without manual claims
 
-Target Persona
+Uses AI for risk prediction, dynamic pricing, and fraud detection
 
-Food delivery partners (Swiggy/Zomato) operating in urban areas such as Chennai.
+## Target Persona
 
-Solution Overview
-How It Works
+Primary Users:
+Food delivery partners (Swiggy/Zomato) operating in urban environments such as Chennai.
 
-User registers and selects a weekly insurance plan
+These users are highly exposed to environmental and logistical disruptions that directly impact their earning potential.
 
-The system monitors environmental conditions such as weather and air quality
+## Solution Overview
 
-AI models predict risk levels based on real-time and historical data
+GigShield AI introduces a zero-touch parametric insurance system where payouts are triggered automatically when predefined conditions are met.
 
-If a disruption occurs, the system automatically triggers a payout
+### Workflow
 
-Fraud detection mechanisms validate the authenticity of the event
+User registers and subscribes to a weekly insurance plan
 
-Parametric Triggers
-Trigger Type	Condition	Impact on Work
+System continuously monitors external data (weather, AQI, traffic)
+
+AI models evaluate real-time risk levels
+
+If a disruption threshold is crossed, a payout is automatically triggered
+
+Fraud detection mechanisms validate authenticity before processing
+
+## Parametric Triggers
+Trigger Type	Condition	Impact on Income
 Heavy Rain	Rainfall > 50mm	Deliveries halted
 High Pollution	AQI > 250	Unsafe working conditions
-Extreme Heat	Temperature > 42°C	Health risk, reduced hours
-Traffic Congestion	High traffic index	Fewer deliveries completed
-Weekly Pricing Model
-Plan	Premium (per week)	Coverage Amount
+Extreme Heat	Temperature > 42°C	Reduced working hours
+Traffic Congestion	High traffic index	Lower delivery efficiency
+## Weekly Pricing Model
+
+The pricing model is structured on a weekly basis to align with gig workers' earning cycles.
+
+Plan	Weekly Premium	Coverage Amount
 Basic	₹49	₹300
 Standard	₹79	₹600
 Premium	₹99	₹1000
 
-Pricing will be dynamically adjusted using AI-based risk scoring.
+Dynamic Adjustment:
+Premiums are adjusted using AI-based risk scoring based on location and predicted disruptions.
 
-AI/ML Integration
-Risk Prediction
+## AI/ML Integration
+### 1. Risk Prediction
 
-Machine learning models analyze weather forecasts and historical disruption data to predict risk levels (Low, Medium, High).
+Predicts likelihood of disruptions using weather forecasts and historical data
 
-Dynamic Pricing
+Outputs risk levels (Low, Medium, High)
 
-Premiums are adjusted based on predicted risk levels and geographic conditions.
+### 2. Dynamic Pricing
 
-Fraud Detection
+Adjusts weekly premiums based on predicted risk
 
-GPS-based location validation
+Enables fair and adaptive pricing
 
-Detection of duplicate or abnormal claims
+### 3. Fraud Detection
 
-Anomaly detection using behavioral patterns
+GPS-based location verification
 
-System Workflow
+Detection of duplicate claims
 
-User purchases weekly plan → System monitors external conditions → AI predicts risk → Disruption detected → Fraud validation → Automatic payout → User notification
+Behavioral anomaly detection
 
-Tech Stack
+## System Workflow
+User purchases weekly plan  
+        ↓  
+System monitors external conditions  
+        ↓  
+AI predicts risk levels  
+        ↓  
+Disruption threshold met  
+        ↓  
+Fraud validation  
+        ↓  
+Automatic payout triggered  
+        ↓  
+User notified  
+## Tech Stack
 
 Frontend: EJS / HTML / CSS
-
 Backend: Node.js with Express
-
 Database: MongoDB
-
 APIs: OpenWeather API, AQI APIs
-
 AI/ML: Python (Scikit-learn) or rule-based models
+Payments: Razorpay (Test Mode)
 
-Payments: Razorpay (test mode)
+## Deliverables (Phase 1)
 
-Deliverables for Phase 1
+Defined delivery partner persona
 
-Defined persona and problem understanding
+End-to-end workflow and architecture
 
-Clear workflow and system architecture
+Weekly pricing model
 
-Weekly pricing model and parametric triggers
+Parametric trigger definition
 
 AI/ML integration strategy
 
 GitHub repository with documentation
 
-Future Enhancements
+## Future Enhancements
 
-Real-time risk heatmaps
+Real-time risk heatmaps for different zones
 
 Personalized insurance plans based on user behavior
 
-Integration with delivery platforms
+Integration with delivery platforms (Swiggy, Zomato APIs)
 
-Advanced machine learning models for improved prediction accuracy
+Advanced machine learning models for improved accuracy
 
-Demo Plan
+## Demo Plan
 
-The demonstration will include:
+The system demonstration will include:
 
 User onboarding and registration
 
-Plan selection process
+Weekly plan selection
 
-Simulation of a disruption event (e.g., heavy rainfall)
+Simulation of disruption (e.g., heavy rainfall event)
 
-Automatic payout triggering and notification
+Automatic payout triggering
+
+Display of payout notification
