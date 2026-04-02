@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
   fraudStatus: { type: String, enum: ['Low Risk', 'Medium Risk', 'High Risk'], default: 'Low Risk' },
   activePolicy: { type: mongoose.Schema.Types.ObjectId, ref: 'Policy' },
   policyExpiry: { type: Date },
-  isSuspended: { type: Boolean, default: false }
+  isSuspended: { type: Boolean, default: false },
+  lastKnownLocation: {
+    lat: { type: Number },
+    lng: { type: Number }
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

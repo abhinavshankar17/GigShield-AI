@@ -50,6 +50,13 @@ const getDashboardMetrics = async (req, res) => {
         underReviewCount: payouts.filter(p => p.status === 'Under Review').length,
         highRiskFlags
       },
+      lossRatioHistory: [
+        { month: 'Jan', ratio: 65 },
+        { month: 'Feb', ratio: 58 },
+        { month: 'Mar', ratio: 72 },
+        { month: 'Apr', ratio: 45 },
+        { month: 'May', ratio: lossRatio.toFixed(2) }
+      ],
       recentFraudAlerts: fraudAlerts.slice(0, 10)
     });
 
