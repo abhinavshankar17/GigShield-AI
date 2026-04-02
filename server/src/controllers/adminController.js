@@ -69,4 +69,84 @@ const getRiders = async (req, res) => {
   }
 };
 
-module.exports = { getDashboardMetrics, getRiders };
+const getRiskZones = async (req, res) => {
+  try {
+    const RiskZone = require('../models/RiskZone');
+    const zones = await RiskZone.find({});
+    res.json(zones);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateRiskMultiplier = async (req, res) => {
+  try {
+    const RiskZone = require('../models/RiskZone');
+    const { id } = req.params;
+    const { multiplier } = req.body;
+    const zone = await RiskZone.findByIdAndUpdate(id, { pricingMultiplier: multiplier }, { new: true });
+    res.json(zone);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getAllPayouts = async (req, res) => {
+  try {
+    const payouts = await Payout.find({})
+      .populate('user', 'name email fraudScore')
+      .populate('policy', 'name')
+      .populate('triggerEvent', 'type zone severity');
+    res.json(payouts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updatePayoutStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const payout = await Payout.findByIdAndUpdate(id, { status }, { new: true });
+    res.json(payout);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const suspendRider = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isSuspended } = req.body;
+    const user = await User.findByIdAndUpdate(id, { isSuspended }, { new: true }).select('-password');
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getSystemHealth = async (req, res) => {
+  try {
+    // Simulated health check
+    res.json({
+      googleMaps: { status: 'Operational', latency: '45ms' },
+      openWeather: { status: 'Operational', latency: '120ms' },
+      stripe: { status: 'Operational', latency: '85ms' },
+      database: { status: 'Connected', latency: '2ms' },
+      uptime: '14 days, 3 hours'
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { 
+  getDashboardMetrics, 
+  getRiders, 
+  getRiskZones, 
+  updateRiskMultiplier, 
+  getAllPayouts, 
+  updatePayoutStatus, 
+  suspendRider, 
+  getSystemHealth 
+};

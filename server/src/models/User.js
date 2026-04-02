@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
   fraudScore: { type: Number, default: 12 }, // out of 100
   fraudStatus: { type: String, enum: ['Low Risk', 'Medium Risk', 'High Risk'], default: 'Low Risk' },
   activePolicy: { type: mongoose.Schema.Types.ObjectId, ref: 'Policy' },
-  policyExpiry: { type: Date }
+  policyExpiry: { type: Date },
+  isSuspended: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
