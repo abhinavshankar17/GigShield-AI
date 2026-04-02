@@ -5,9 +5,15 @@ import { AuthProvider, AuthContext } from './context/AuthContext';
 // Placeholders for Pages
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
-import WorkerDashboard from './pages/WorkerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import OnboardingPage from './pages/OnboardingPage';
+
+// Rider Dashboard Components
+import SidebarLayout from './components/SidebarLayout';
+import HomePage from './pages/HomePage';
+import PoliciesPage from './pages/PoliciesPage';
+import PayoutHistoryPage from './pages/PayoutHistoryPage';
+import EarningsPage from './pages/EarningsPage';
 
 const ProtectedRoute = ({ children, roleRequired }) => {
   const { user, loading } = React.useContext(AuthContext);
@@ -22,18 +28,27 @@ const ProtectedRoute = ({ children, roleRequired }) => {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
-      <Route path="/auth" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Navigate to="/dashboard/home" />} />
+      <Route path="/auth" element={<Navigate to="/dashboard/home" />} />
       <Route path="/onboarding" element={
         <ProtectedRoute roleRequired="worker">
           <OnboardingPage />
         </ProtectedRoute>
       } />
+      
+      {/* Nested Routing for Worker Dashboard */}
       <Route path="/dashboard" element={
         <ProtectedRoute roleRequired="worker">
-          <WorkerDashboard />
+          <SidebarLayout />
         </ProtectedRoute>
-      } />
+      }>
+        <Route index element={<Navigate to="home" />} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="policies" element={<PoliciesPage />} />
+        <Route path="payouts" element={<PayoutHistoryPage />} />
+        <Route path="earnings" element={<EarningsPage />} />
+      </Route>
+
       <Route path="/admin" element={
         <ProtectedRoute roleRequired="admin">
           <AdminDashboard />

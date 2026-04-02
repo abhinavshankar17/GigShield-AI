@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import SimulationPanel from '../components/SimulationPanel';
-import { FiPieChart, FiDollarSign, FiUsers, FiAlertTriangle, FiLogOut } from 'react-icons/fi';
+import { FiPieChart, FiCreditCard, FiUsers, FiAlertTriangle, FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
 
         <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
            <div style={{ background: 'rgba(122, 40, 255, 0.1)', padding: '16px', borderRadius: '12px' }}>
-             <FiDollarSign size={32} color="var(--accent-purple)" />
+             <FiCreditCard size={32} color="var(--accent-purple)" />
            </div>
            <div>
              <h4 className="text-subtle">Total Payouts</h4>

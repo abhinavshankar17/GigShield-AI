@@ -60,14 +60,21 @@ const availablePolicies = [
 ];
 
 const PolicyStoreWidget = () => {
-  const { user, updateUserPolicy } = useContext(AuthContext);
+  const { user, subscribePolicy, unsubscribePolicy } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [lockAlert, setLockAlert] = useState({ show: false, message: '' });
 
   if (!user) return null;
 
   const handleSubscribe = (policy) => {
-    updateUserPolicy({ activePolicy: policy });
-    setIsOpen(false);
+    subscribePolicy(policy);
+  };
+
+  const handleDrop = (policyId) => {
+    const result = unsubscribePolicy(policyId);
+    if (!result.success) {
+      setLockAlert({ show: true, message: result.message });
+    }
   };
 
   if (!isOpen) {
@@ -90,7 +97,7 @@ const PolicyStoreWidget = () => {
       <div className="grid-auto">
         {availablePolicies.map((policy) => {
           const Icon = policy.icon;
-          const isActive = user.activePolicy && user.activePolicy.name === policy.name;
+          const isActive = user.activePolicies && user.activePolicies.find(p => p.id === policy.id);
 
           return (
             <div key={policy.id} style={{ 
@@ -120,7 +127,7 @@ const PolicyStoreWidget = () => {
                </div>
 
                {isActive ? (
-                 <button className="btn" style={{ width: '100%', background: 'transparent', border: `1px solid ${policy.color}`, color: policy.color, cursor: 'default' }}>Active</button>
+                 <button className="btn btn-outline" style={{ width: '100%', borderColor: 'var(--status-error)', color: 'var(--status-error)' }} onClick={() => handleDrop(policy.id)}>Drop Policy</button>
                ) : (
                  <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => handleSubscribe(policy)}>Subscribe</button>
                )}
@@ -128,6 +135,19 @@ const PolicyStoreWidget = () => {
           );
         })}
       </div>
+
+      {/* Custom Lockout Alert Modal */}
+      {lockAlert.show && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+           <div className="glass-panel animate-fade-in" style={{ maxWidth: '400px', border: '1px solid var(--status-error)', textAlign: 'center', padding: '30px' }}>
+              <FiAlertTriangle size={48} color="var(--status-error)" style={{ marginBottom: '16px' }} />
+              <h3 style={{ marginBottom: '12px', color: 'var(--status-error)' }}>Action Blocked</h3>
+              <p style={{ marginBottom: '24px', lineHeight: 1.5 }}>{lockAlert.message}</p>
+              <button className="btn btn-outline" style={{ width: '100%', borderColor: 'var(--text-muted)', color: 'var(--text-main)' }} onClick={() => setLockAlert({ show: false, message: '' })}>Understood</button>
+           </div>
+        </div>
+      )}
+
     </div>
   );
 };
