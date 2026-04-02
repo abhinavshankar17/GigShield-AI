@@ -86,6 +86,7 @@ a { text-decoration: none; color: inherit; }
 .text-premium {
   background: var(--premium-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .text-subtle { color: var(--text-muted); font-size: 0.9rem; }
@@ -186,27 +187,57 @@ a { text-decoration: none; color: inherit; }
 .badge-error { background: rgba(255, 23, 68, 0.1); color: var(--status-error); border: 1px solid rgba(255, 23, 68, 0.3); }
 .badge-info { background: rgba(0, 210, 255, 0.1); color: var(--accent-blue); border: 1px solid rgba(0, 210, 255, 0.3); }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-  animation: fadeIn 0.5s ease forwards;
+/* Advanced Animations for Auth & Branding */
+@keyframes moveGrid {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(40px); }
 }
 
-/* Pulse effect for Live Status */
-@keyframes pulseRed {
-  0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 23, 68, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); }
+.auth-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% 50%, #0a0d1a 0%, #07090f 100%);
+  overflow: hidden;
+  z-index: -1;
 }
-.live-indicator {
-  width: 8px;
-  height: 8px;
-  background-color: var(--status-error);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 8px;
-  animation: pulseRed 2s infinite;
+
+.auth-bg::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background-image: 
+    linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: moveGrid 20s linear infinite;
+  transform: perspective(500px) rotateX(60deg);
 }
+
+@keyframes scanLine {
+  0% { top: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0; width: 100%; height: 2px;
+  background: var(--accent-blue);
+  box-shadow: 0 0 15px var(--accent-blue);
+  animation: scanLine 4s linear infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.glow-on-hover:hover {
+  filter: drop-shadow(0 0 8px var(--accent-blue));
+  transform: scale(1.02);
+}
+
+.form-input:focus {
+  background: rgba(30, 36, 56, 0.8);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
+}
+
