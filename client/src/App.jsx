@@ -28,8 +28,8 @@ const ProtectedRoute = ({ children, roleRequired }) => {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard/home" />} />
-      <Route path="/auth" element={<Navigate to="/dashboard/home" />} />
+      <Route path="/" element={<Navigate to="/auth" />} />
+      <Route path="/auth" element={<AuthPage />} />
       <Route path="/onboarding" element={
         <ProtectedRoute roleRequired="worker">
           <OnboardingPage />

@@ -3,8 +3,7 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
+const mockWorkerData = {
     _id: "mock_worker_1",
     name: "Ritesh Kumar",
     email: "ritesh@gigshield.com",
@@ -16,12 +15,12 @@ export const AuthProvider = ({ children }) => {
     lifetimeEarnings: 145000,
     activePolicies: [
       {
-        id: "pol_1", // Adding ID for comparison later
+        id: "pol_1", 
         name: "Heavy Rain Protection",
         weeklyPremium: 50,
         maxPayout: 1500,
-        subscribedAt: Date.now() - (1 * 24 * 60 * 60 * 1000), // Subscribed 1 day ago
-        lockedUntil: Date.now() + (6 * 24 * 60 * 60 * 1000)   // Locked for 6 more days
+        subscribedAt: Date.now() - (1 * 24 * 60 * 60 * 1000),
+        lockedUntil: Date.now() + (6 * 24 * 60 * 60 * 1000)
       }
     ],
     payoutHistory: [
@@ -35,32 +34,43 @@ export const AuthProvider = ({ children }) => {
       { name: 'Week 3', earnings: 2600, protected: 300 },
       { name: 'Week 4', earnings: 2900, protected: 0 }
     ]
-  });
+};
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Hardcoded user, no loading needed.
+    const savedUser = localStorage.getItem('gigshield_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, role) => {
     try {
-      const { data } = await axios.post('/api/auth/login', { email, password });
-      setUser(data);
-      localStorage.setItem('gigshield_user', JSON.stringify(data));
+      let finalUser;
+      if (role === 'admin') {
+         finalUser = { _id: "admin_master", name: "System Admin", email, role: "admin", token: "mock_jwt_token" };
+      } else {
+         finalUser = { ...mockWorkerData, email };
+      }
+      setUser(finalUser);
+      localStorage.setItem('gigshield_user', JSON.stringify(finalUser));
       return { success: true };
     } catch (error) {
-      return { success: false, message: error.response?.data?.message || 'Login failed' };
+      return { success: false, message: 'Mock Login failed' };
     }
   };
 
   const register = async (userData) => {
     try {
-      const { data } = await axios.post('/api/auth/register', userData);
-      setUser(data);
-      localStorage.setItem('gigshield_user', JSON.stringify(data));
+      const finalUser = { ...mockWorkerData, name: userData.name, email: userData.email, role: 'worker' };
+      setUser(finalUser);
+      localStorage.setItem('gigshield_user', JSON.stringify(finalUser));
       return { success: true };
     } catch (error) {
-      return { success: false, message: error.response?.data?.message || 'Registration failed' };
+      return { success: false, message: 'Registration failed' };
     }
   };
 

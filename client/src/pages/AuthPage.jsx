@@ -22,7 +22,7 @@ const AuthPage = () => {
   useEffect(() => {
     if (user) {
       if (user.role === 'admin') navigate('/admin');
-      else if (user.activePolicy) navigate('/dashboard');
+      else if (user.activePolicies && user.activePolicies.length > 0) navigate('/dashboard');
       else navigate('/onboarding');
     }
   }, [user, navigate]);
@@ -33,7 +33,7 @@ const AuthPage = () => {
     e.preventDefault();
     setErrorMsg('');
     const res = isLogin 
-      ? await login(formData.email, formData.password)
+      ? await login(formData.email, formData.password, role)
       : await register({
           ...formData, 
           role,
